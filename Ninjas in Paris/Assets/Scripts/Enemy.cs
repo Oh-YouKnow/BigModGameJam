@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
 
 
     [SerializeField] float attackDistance;
+    [SerializeField] GameObject damageArea;
 
     [SerializeField] GameObject attackMarker;
     GameObject player;
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour {
             state = states.attack;
 
             attackMarker.SetActive(true);
+            damageArea.SetActive(true);
             attackTimer = 3;
         }
 
@@ -42,6 +44,7 @@ public class Enemy : MonoBehaviour {
                 break;
             case states.idle:
                 attackMarker.SetActive(false);
+                damageArea.SetActive(false);
                 idleTimer -= Time.deltaTime;
                 break;
         }

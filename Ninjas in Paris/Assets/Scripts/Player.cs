@@ -7,8 +7,17 @@ public class Player : MonoBehaviour
 {
 
     [SerializeField] float speed;
+    [SerializeField] float counterSpeed;
 
     public int combo = 0;
+
+
+
+
+
+    private float moveTimer = 0;
+    private Vector3 oPlayerPosition;
+    private Vector3 targetPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,15 +39,32 @@ public class Player : MonoBehaviour
 
         transform.position += input * Time.deltaTime * speed;
 
-        if (Input.GetKey("x")) {
+        moveTimer -= Time.deltaTime;
+        if(moveTimer > 0) {
+            transform.position = targetPosition + (oPlayerPosition - targetPosition) * (moveTimer / counterSpeed);
+        }
+
+        if (Input.GetKey("x") && moveTimer <= 0) {
             GameObject[] enemyList = GameObject.FindGameObjectsWithTag("enemy");
             Array.Sort(enemyList, DistanceComparison); //sort by distance to player
             foreach (GameObject Enemy in enemyList) {
-                if (Vector3.Distance(Enemy.transform.position, transform.position) > 5) break;
+                Vector3 enemyPos = Enemy.transform.position;
+                Vector3 playerPos = transform.position;
 
+                if (Vector3.Distance(enemyPos, playerPos) > 5) break;
+                
                 if (Enemy.GetComponent<Enemy>().isAttacking()) {
                     Enemy.GetComponent<Enemy>().counter();
                     combo++;
+
+
+                    //zoom over to them
+
+                    targetPosition = Vector3.Normalize(new Vector3(playerPos.x - enemyPos.x, 0, playerPos.z - enemyPos.z));
+                    targetPosition *= 1.5f;
+                    targetPosition += enemyPos;
+                    moveTimer = counterSpeed;
+                        oPlayerPosition = playerPos;
                     break;
                 }
             }
