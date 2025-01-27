@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour {
 
     [SerializeField] float attackDistance;
     [SerializeField] GameObject damageArea;
+    [SerializeField] int currentHealth = 5;
 
     [SerializeField] GameObject attackMarker;
     GameObject player;
@@ -17,14 +18,15 @@ public class Enemy : MonoBehaviour {
     float attackTimer = 0;
     float idleTimer = 0;
     
-    // Start is called before the first frame update
+
+    
     void Start()
     {
         player = GameObject.FindWithTag("Player");
 
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (Vector3.Distance(transform.position, player.transform.position) < attackDistance && state != states.attack && idleTimer < 0) {
@@ -57,5 +59,21 @@ public class Enemy : MonoBehaviour {
     public void counter() {
         state = states.idle;
         idleTimer = 2;
+    }
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log($"{gameObject.name} took {damage} damage! Remaining health: {currentHealth}");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log($"{gameObject.name} has been destroyed!");
+        Destroy(gameObject);
     }
 }
