@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] float speed;
     [SerializeField] float counterSpeed;
+    [SerializeField] float counterDistance;
     [SerializeField] private Transform sprite;
     [SerializeField] private GameObject slashPrefab;
     [SerializeField] private float slashRadius = 5f; 
@@ -40,14 +41,10 @@ public class Player : MonoBehaviour
     {
         Vector3 input = Vector3.zero;
 
-        if (Input.GetKey("left")) input += new Vector3(-1, 0, 0);
-        if (Input.GetKey("right")) input += new Vector3(1, 0, 0);
-        if (Input.GetKey("up")) input += new Vector3(0, 0, 1);
-        if (Input.GetKey("down")) input += new Vector3(0, 0, -1);
-        if (Input.GetKey("a")) input += new Vector3(-1, 0, 0);
-        if (Input.GetKey("d")) input += new Vector3(1, 0, 0);
-        if (Input.GetKey("w")) input += new Vector3(0, 0, 1);
-        if (Input.GetKey("s")) input += new Vector3(0, 0, -1);
+        if (Input.GetButton("Left")) input += new Vector3(-1, 0, 0);
+        if (Input.GetButton("Right")) input += new Vector3(1, 0, 0);
+        if (Input.GetButton("Up")) input += new Vector3(0, 0, 1);
+        if (Input.GetButton("Down")) input += new Vector3(0, 0, -1);
 
         input = Vector3.Normalize(input);
 
@@ -66,6 +63,7 @@ public class Player : MonoBehaviour
         if (input.x != 0)
         {
             float spriteScaleX = input.x > 0 ? 1 : -1;
+
             sprite.localScale = new Vector3(spriteScaleX, sprite.localScale.y, sprite.localScale.z);
         }
         moveTimer -= Time.deltaTime;
@@ -73,14 +71,14 @@ public class Player : MonoBehaviour
             transform.position = targetPosition + (oPlayerPosition - targetPosition) * (moveTimer / counterSpeed);
         }
 
-        if (Input.GetKey("x") && moveTimer <= 0) {
+        if (Input.GetButtonDown("Counter") && moveTimer <= 0) {
             GameObject[] enemyList = GameObject.FindGameObjectsWithTag("enemy");
             Array.Sort(enemyList, DistanceComparison); //sort by distance to player
             foreach (GameObject Enemy in enemyList) {
                 Vector3 enemyPos = Enemy.transform.position;
                 Vector3 playerPos = transform.position;
 
-                if (Vector3.Distance(enemyPos, playerPos) > 5) break;
+                if (Vector3.Distance(enemyPos, playerPos) > counterDistance) break;
                 
                 if (Enemy.GetComponent<Enemy>().isAttacking()) {
                     Enemy.GetComponent<Enemy>().counter();
@@ -93,44 +91,19 @@ public class Player : MonoBehaviour
                     targetPosition *= 1.5f;
                     targetPosition += enemyPos;
                     moveTimer = counterSpeed;
-                        oPlayerPosition = playerPos;
-                    break;
-                }
-            }
-            
-
-        }
-        if (Input.GetKey(KeyCode.Mouse1) && moveTimer <= 0)
-        {
-            GameObject[] enemyList = GameObject.FindGameObjectsWithTag("enemy");
-            Array.Sort(enemyList, DistanceComparison); //sort by distance to player
-            foreach (GameObject Enemy in enemyList)
-            {
-                Vector3 enemyPos = Enemy.transform.position;
-                Vector3 playerPos = transform.position;
-
-                if (Vector3.Distance(enemyPos, playerPos) > 5) break;
-
-                if (Enemy.GetComponent<Enemy>().isAttacking())
-                {
-                    Enemy.GetComponent<Enemy>().counter();
-                    combo++;
-
-
-                    //zoom over to them
-
-                    targetPosition = Vector3.Normalize(new Vector3(playerPos.x - enemyPos.x, 0, playerPos.z - enemyPos.z));
-                    targetPosition *= 1.5f;
-                    targetPosition += enemyPos;
-                    moveTimer = counterSpeed;
                     oPlayerPosition = playerPos;
+
+                    //change sprite direction
+                    float spriteScaleX = (enemyPos - playerPos).x > 0 ? 1 : -1;
+                    sprite.localScale = new Vector3(spriteScaleX, sprite.localScale.y, sprite.localScale.z);
                     break;
                 }
             }
             
 
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        
+        if (Input.GetButtonDown("Attack"))
         {
             PerformSlash();
         }
@@ -180,7 +153,10 @@ public class Player : MonoBehaviour
     }
 
 
+    private void increaseCombo() {
+        combo++;
 
+    }
 
 
 
