@@ -42,7 +42,10 @@ public class Enemy : MonoBehaviour {
                 attackMarker.transform.localScale = new Vector3(1, 1, 1) * ((attackTimer / 3f) + .1f);
                 attackTimer -= Time.deltaTime;
 
-                if(attackTimer <= 0) state = states.idle;
+                if (attackTimer <= 0) {
+                    player.GetComponent<Player>().takeDamage();
+                    state = states.idle;
+                }
                 break;
             case states.idle:
                 attackMarker.SetActive(false);

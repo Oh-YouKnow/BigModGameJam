@@ -20,9 +20,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Vector3 slashHitboxRotation = Vector3.zero;
 
     public int combo = 0;
+    [SerializeField] private GameObject comboText;
 
 
-
+    private int health = 5;
+    private int maxHealth = 5;
 
     private PlayerAnimation playerAnimation; // Animation Controller
 
@@ -82,7 +84,7 @@ public class Player : MonoBehaviour
                 
                 if (Enemy.GetComponent<Enemy>().isAttacking()) {
                     Enemy.GetComponent<Enemy>().counter();
-                    combo++;
+                    increaseCombo();
 
 
                     //zoom over to them
@@ -155,7 +157,13 @@ public class Player : MonoBehaviour
 
     private void increaseCombo() {
         combo++;
+        comboText.GetComponent<ComboText>().increaseCombo(combo);
+    }
 
+    public void takeDamage() {
+        health--;
+        combo = 0;
+        comboText.GetComponent<ComboText>().killCombo();
     }
 
 
