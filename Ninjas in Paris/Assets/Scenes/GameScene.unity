@@ -786,7 +786,7 @@ MonoBehaviour:
   hitboxHeight: 0.5
   smokeSprite: {fileID: 6053587392895560470, guid: 6ef89bc3aa480854db296901b73cc9f0,
     type: 3}
-  force: 25
+  force: 15
   friction: 60
   smokePrefab: {fileID: 7374780172023595785, guid: 692d1a0e90ffc0f4cbc05abd9b67ebaa,
     type: 3}

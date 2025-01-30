@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject smokeSprite;
 
     [Header("Sliding Parameters")]
-    [SerializeField] private float force = 5f;
-    [SerializeField] private float friction = 2f;
+    [SerializeField] private float force = 2f;
+    [SerializeField] private float friction = 3f;
     private Vector3 slidingDirection;
     private float slidingSpeed;
     private bool isSliding;
@@ -208,6 +208,7 @@ public class Player : MonoBehaviour
         StartCoroutine(SpawnSmokeEffects(spawnedHitbox.transform));
 
         combo = 0;
+        comboText.GetComponent<ComboText>().killCombo();
     }
 
 
