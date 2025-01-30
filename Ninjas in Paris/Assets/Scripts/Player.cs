@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+
     [SerializeField] float speed;
     [SerializeField] float counterSpeed;
     [SerializeField] float counterDistance;
@@ -26,16 +27,21 @@ public class Player : MonoBehaviour
     private int health = 5;
     private int maxHealth = 5;
 
+    private GameObject healthUI;
+
     private PlayerAnimation playerAnimation; // Animation Controller
 
     private float moveTimer = 0;
     private Vector3 oPlayerPosition;
     private Vector3 targetPosition;
-    
+
+
+
     void Start()
     {
         playerAnimation = GetComponentInChildren<PlayerAnimation>();
 
+        healthUI = GameObject.Find("HeartUI");
     }
 
 
@@ -164,6 +170,8 @@ public class Player : MonoBehaviour
         health--;
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
+
+        healthUI.GetComponent<HealthUI>().takeDamage(health);
     }
 
 
