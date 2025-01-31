@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class Enemy : MonoBehaviour {
 
@@ -11,8 +12,11 @@ public class Enemy : MonoBehaviour {
     [SerializeField] float attackDistance;
     [SerializeField] GameObject damageArea;
     [SerializeField] int currentHealth = 5;
+    [SerializeField] int armorClass = 1;
 
     [SerializeField] GameObject attackMarker;
+    [SerializeField] private TextMeshPro armorClassText;
+
     GameObject player;
     states state = states.idle;
 
@@ -26,12 +30,20 @@ public class Enemy : MonoBehaviour {
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        if (armorClassText != null)
+        {
+            armorClassText.text = armorClass.ToString();
+        }
 
     }
 
     
     void Update()
     {
+        if (armorClassText != null)
+        {
+            armorClassText.transform.rotation = Camera.main.transform.rotation; // Always face the camera
+        }
         // If not attacking, follow player.
         if (state == states.idle && player != null)
         {
@@ -80,6 +92,15 @@ public class Enemy : MonoBehaviour {
     }
     public void TakeDamage(int damage)
     {
+        int lastCombo = GameObject.FindWithTag("Player").GetComponent<Player>().GetLastCombo(); // Get last combo
+
+        // Check against Armor Class
+        if (lastCombo < armorClass)
+        {
+            Debug.Log($"{gameObject.name}'s Armor Class blocked the attack! Required combo: {armorClass}, but got: {lastCombo}");
+            return;
+        }
+
         currentHealth -= damage;
         Debug.Log($"{gameObject.name} took {damage} damage! Remaining health: {currentHealth}");
 

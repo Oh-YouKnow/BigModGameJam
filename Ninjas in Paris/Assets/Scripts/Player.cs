@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private Vector3 slidingDirection;
     private float slidingSpeed;
     private bool isSliding;
+    private int lastCombo = 0; // Store the last combo value
 
     [SerializeField] private GameObject smokePrefab;
     [SerializeField] private Transform smokeParent; // Origin object for smoke
@@ -177,17 +178,18 @@ public class Player : MonoBehaviour
             transform.position.z
         );
 
-        // Determine rotation
+        // Rotate that shi
         Quaternion hitboxRotation = Quaternion.Euler(0, facingDirection > 0 ? 0 : 180, 0);
 
-        // Check if prefab is assigned
         if (cylinderHitboxPrefab == null)
         {
             Debug.LogError("[PerformSlash] Error: cylinderHitboxPrefab is NOT assigned!");
             return;
         }
 
-        // Spawn hitbox
+        // Store the last combo value before resetting
+        lastCombo = combo;
+
         GameObject spawnedHitbox = Instantiate(cylinderHitboxPrefab, spawnPosition, hitboxRotation);
 
         if (spawnedHitbox == null)
@@ -196,19 +198,23 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log($"[PerformSlash] Spawned hitbox at {spawnPosition} with scale {hitboxScaleFactor}");
+            Debug.Log($"[PerformSlash] Spawned hitbox at {spawnPosition} with scale {hitboxScaleFactor}, Last Combo Level: {lastCombo}");
         }
 
         spawnedHitbox.transform.localScale *= hitboxScaleFactor;
 
-        // Destroy hitbox
         Destroy(spawnedHitbox, hitboxLifetime);
 
-        // Start spawning smoke
         StartCoroutine(SpawnSmokeEffects(spawnedHitbox.transform));
 
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
+    }
+
+    // Duh
+    public int GetLastCombo()
+    {
+        return lastCombo;
     }
 
 
@@ -270,7 +276,7 @@ public class Player : MonoBehaviour
 
 
 
-
+    // Currently not being used, may be useful for scaling the hitbox.
     private float CalculateComboScale(int combo)
     {
         if (combo >= 1 && combo <= 5)
