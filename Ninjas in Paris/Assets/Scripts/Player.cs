@@ -113,8 +113,8 @@ public class Player : MonoBehaviour
 
                 if (Vector3.Distance(enemyPos, playerPos) > counterDistance) break;
                 
-                if (Enemy.GetComponent<Enemy>().isAttacking()) {
-                    Enemy.GetComponent<Enemy>().counter();
+                if (Enemy.GetComponent<EnemyBase>().isParryable) {
+                    Enemy.GetComponent<EnemyBase>().Counter();
 
                     increaseCombo();
 

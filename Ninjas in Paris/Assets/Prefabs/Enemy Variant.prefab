@@ -256,8 +256,8 @@ GameObject:
   - component: {fileID: 3264368281871503717}
   - component: {fileID: 1945888183308032420}
   - component: {fileID: 8454138614965558897}
-  - component: {fileID: 5804011875618534400}
   - component: {fileID: 3084663217908419728}
+  - component: {fileID: 3822095056863789259}
   m_Layer: 0
   m_Name: Enemy Variant
   m_TagString: enemy
@@ -355,23 +355,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5804011875618534400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7985414568129345724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4188f3d555f1da49bacebfbfa9bb174, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
-  attackDistance: 5
-  damageArea: {fileID: 7927572070538775545}
-  currentHealth: 5
-  attackMarker: {fileID: 3083126884883347567}
 --- !u!54 &3084663217908419728
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -399,3 +382,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3822095056863789259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7985414568129345724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 240e21cd01e859542a6af2012244505b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  attackDistance: 5
+  damageArea: {fileID: 7927572070538775545}
+  currentHealth: 5
+  armorClass: 1
+  attackMarker: {fileID: 3083126884883347567}
+  armorClassText: {fileID: 0}
+  attackTimer: 0
+  idleTimer: 0
+  player: {fileID: 0}
+  spawner: {fileID: 0}

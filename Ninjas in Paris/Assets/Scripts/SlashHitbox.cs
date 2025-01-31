@@ -42,10 +42,9 @@ public class SlashHitbox : MonoBehaviour
 
         if (other.CompareTag("enemy"))
         {
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (enemy != null)
+            if (other != null)
             {
-                enemy.TakeDamage(damage);
+                other.GetComponent<EnemyBase>().TakeDamage(damage);
                 Debug.Log($"[SlashHitbox] Hit {other.name} for {damage} damage.");
             }
             else
