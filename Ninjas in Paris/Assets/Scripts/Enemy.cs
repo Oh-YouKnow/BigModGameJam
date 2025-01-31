@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
@@ -18,6 +19,8 @@ public class Enemy : MonoBehaviour {
     float attackTimer = 0;
     float idleTimer = 0;
     
+    private GameObject _spawnerParent;
+    private EnemySpawner _spawner;
 
     
     void Start()
@@ -90,5 +93,13 @@ public class Enemy : MonoBehaviour {
     {
         Debug.Log($"{gameObject.name} has been destroyed!");
         Destroy(gameObject);
+        
+        // Find the Enemy Spawner and communicate an enemy has died.
+        _spawnerParent = GameObject.FindWithTag("Spawner");
+        if (_spawnerParent.GetComponent<EnemySpawner>() != null)
+        {
+            _spawner = _spawnerParent.GetComponent<EnemySpawner>();
+            _spawner.currentEnemyCount--;
+        }
     }
 }
