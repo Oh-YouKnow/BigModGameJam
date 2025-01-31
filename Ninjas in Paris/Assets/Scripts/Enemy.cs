@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour {
 
     enum states {idle, attack };
 
-
+    [SerializeField] float moveSpeed = 2f;
     [SerializeField] float attackDistance;
     [SerializeField] GameObject damageArea;
     [SerializeField] int currentHealth = 5;
@@ -29,6 +29,12 @@ public class Enemy : MonoBehaviour {
     
     void Update()
     {
+        // If not attacking, follow player.
+        if (state == states.idle && player != null)
+        {
+            FollowPlayer();
+        }
+
         if (Vector3.Distance(transform.position, player.transform.position) < attackDistance && state != states.attack && idleTimer < 0) {
             state = states.attack;
 
@@ -53,6 +59,12 @@ public class Enemy : MonoBehaviour {
                 idleTimer -= Time.deltaTime;
                 break;
         }
+    }
+    private void FollowPlayer()
+    {
+        // Move towards the player
+        Vector3 direction = (player.transform.position - transform.position).normalized;
+        transform.position += direction * moveSpeed * Time.deltaTime;
     }
 
     public bool isAttacking() {
