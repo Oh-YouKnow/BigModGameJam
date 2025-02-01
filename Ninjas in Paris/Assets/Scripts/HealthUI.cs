@@ -32,7 +32,6 @@ public class HealthUI : MonoBehaviour
         for(int i = 0; i < currentHealth; i++) {
             GameObject heart = new GameObject("heart", typeof(SpriteRenderer));
             heart.GetComponent<SpriteRenderer>().sprite = healthIcon;
-            heart.transform.parent = this.transform;
             heart.transform.position = new Vector3(transform.position.x + heartSpacing * i, transform.position.y, transform.position.z);
             heart.transform.localScale *= 1.8f;
             hearts.Add(heart);
