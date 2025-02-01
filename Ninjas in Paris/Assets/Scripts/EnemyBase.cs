@@ -6,6 +6,8 @@ using TMPro;
 
 public abstract class EnemyBase : MonoBehaviour
 {
+    // Bare minimum stats for enemies
+    
     [SerializeField] public float moveSpeed = 10f; // default values
     [SerializeField] public float attackDistance = 5f;
     [SerializeField] public GameObject damageArea;
@@ -33,6 +35,7 @@ public abstract class EnemyBase : MonoBehaviour
     
     public void TakeDamage(int damage)
     {
+        Debug.Log("TakeDamage Called");
         int lastCombo = GameObject.FindWithTag("Player").GetComponent<Player>().GetLastCombo(); // Get last combo
 
         // Check against Armor Class
@@ -60,8 +63,11 @@ public abstract class EnemyBase : MonoBehaviour
         spawner.currentEnemyCount--;
     }
 
+    // isCountered allows for any enemy to have individual countered states.
     public void Counter() {
+        Debug.Log($"{gameObject.name} has been countered!");
         isCountered = true;
+        isParryable = false;
         idleTimer = 2;
     }
 }

@@ -105,6 +105,7 @@ public class Player : MonoBehaviour
         }
 
         if (Input.GetButtonDown("Counter") && moveTimer <= 0) {
+            
             GameObject[] enemyList = GameObject.FindGameObjectsWithTag("enemy");
             Array.Sort(enemyList, DistanceComparison); //sort by distance to player
             foreach (GameObject Enemy in enemyList) {
@@ -114,6 +115,7 @@ public class Player : MonoBehaviour
                 if (Vector3.Distance(enemyPos, playerPos) > counterDistance) break;
                 
                 if (Enemy.GetComponent<EnemyBase>().isParryable) {
+                    Debug.Log("Counter registered.");
                     Enemy.GetComponent<EnemyBase>().Counter();
 
                     increaseCombo();

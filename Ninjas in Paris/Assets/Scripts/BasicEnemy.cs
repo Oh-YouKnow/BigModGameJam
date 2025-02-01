@@ -35,6 +35,8 @@ public class BasicEnemy : EnemyBase
             attackTimer = 3;
         }
 
+        // Upon being countered, ends attack and moves to idle
+        
         if (isCountered)
         {
             isCountered = false;
@@ -43,10 +45,12 @@ public class BasicEnemy : EnemyBase
 
         switch (_state) {
             case State.Attack:
+                isParryable = true;
                 attackMarker.transform.localScale = new Vector3(1, 1, 1) * ((attackTimer / 3f) + .1f);
                 attackTimer -= Time.deltaTime;
 
                 if (attackTimer <= 0) {
+                    isParryable = false;
                     player.GetComponent<Player>().takeDamage();
                     _state = State.Idle;
                 }
@@ -64,9 +68,5 @@ public class BasicEnemy : EnemyBase
         Vector3 direction = (player.transform.position - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
-
-    public new void TakeDamage(int damage)
-    {
-        base.TakeDamage(damage);
-    }
+    
 }
