@@ -42,14 +42,14 @@ public class ComboText : MonoBehaviour
     public void increaseCombo(int combo) {
         comboText.text = (combo + "x");
 
-        shake = .3f;
-        jump = .2f;
+        shake += .3f;
+        jump += .2f;
         if(comboText.fontSize < 130) comboText.fontSize += 1f / combo * 15;
     }
 
     public void killCombo() {
         comboText.fontSize = baseFontSize;
         comboText.text = ("0x");
-        jump = .2f;
+        jump += .2f;
     }
 }
