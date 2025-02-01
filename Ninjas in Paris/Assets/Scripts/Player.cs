@@ -192,7 +192,7 @@ public class Player : MonoBehaviour
 
         // Store the last combo value before resetting
         lastCombo = combo;
-
+        
         GameObject spawnedHitbox = Instantiate(cylinderHitboxPrefab, spawnPosition, hitboxRotation);
 
         if (spawnedHitbox == null)
@@ -208,11 +208,18 @@ public class Player : MonoBehaviour
 
         Destroy(spawnedHitbox, hitboxLifetime);
 
-        StartCoroutine(SpawnSmokeEffects(spawnedHitbox.transform));
+        StartCoroutine(DelayedSmokeEffect(spawnedHitbox.transform));
 
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
     }
+
+    private IEnumerator DelayedSmokeEffect(Transform hitboxTransform)
+    {
+        yield return new WaitForSeconds(0.2f);
+        StartCoroutine(SpawnSmokeEffects(hitboxTransform));
+    }
+
 
     // Duh
     public int GetLastCombo()
