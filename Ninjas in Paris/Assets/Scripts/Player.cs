@@ -122,15 +122,20 @@ public class Player : MonoBehaviour
 
                     Vector3 pushDirection = (transform.position - Enemy.transform.position).normalized;
                     Debug.Log($"[Parry] Calculated Push Direction: {pushDirection}");
+<<<<<<< Updated upstream
+=======
+                    playerAnimation?.SetBlocking(true);
+                    Block();
+>>>>>>> Stashed changes
 
                     StartSliding(pushDirection);
                     //zoom over to them
 
-                    targetPosition = Vector3.Normalize(new Vector3(playerPos.x - enemyPos.x, 0, playerPos.z - enemyPos.z));
-                    targetPosition *= 1.5f;
-                    targetPosition += enemyPos;
-                    moveTimer = counterSpeed;
-                    oPlayerPosition = playerPos;
+                    //targetPosition = Vector3.Normalize(new Vector3(playerPos.x - enemyPos.x, 0, playerPos.z - enemyPos.z));
+                    //targetPosition *= 1.5f;
+                    //targetPosition += enemyPos;
+                    //moveTimer = counterSpeed;
+                    //oPlayerPosition = playerPos;
 
                     //change sprite direction
                     float spriteScaleX = (enemyPos - playerPos).x > 0 ? 1 : -1;
@@ -160,6 +165,34 @@ public class Player : MonoBehaviour
         }
 
     }
+    [SerializeField] private GameObject hitPrefab;
+    [SerializeField] private float hitDuration = 0.5f;
+
+    public void Block()
+    {
+        if (hitPrefab != null)
+        {
+            float spriteDirection = Mathf.Sign(sprite.localScale.x); // Determine sprite direction
+            hitPrefab.transform.localPosition = new Vector3(
+                Mathf.Abs(hitPrefab.transform.localPosition.x) * spriteDirection, // Adjust hit prefab position based on sprite direction
+                hitPrefab.transform.localPosition.y,
+                hitPrefab.transform.localPosition.z
+            );
+            StartCoroutine(EnableHitPrefab());
+        }
+        Debug.Log("[Block] Player blocked an attack.");
+    }
+
+    private IEnumerator EnableHitPrefab()
+    {
+        hitPrefab.SetActive(true);
+        yield return new WaitForSeconds(hitDuration);
+        hitPrefab.SetActive(false);
+    }
+
+
+
+
     private void PerformSlash()
     {
         if (combo <= 0) return;
@@ -300,11 +333,17 @@ public class Player : MonoBehaviour
             Debug.LogWarning("[StartSliding] Direction is zero. Sliding will not start.");
             return;
         }
+
+        bool isShifting = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
         isSliding = true;
-        slidingDirection = direction.normalized;
-        slidingSpeed = force;
+        direction.y = 0; // Restrict movement to horizontal plane
+        slidingDirection = isShifting ? direction.normalized : -direction.normalized; // Slide towards enemy normally, away if shift is held
+        slidingSpeed = isShifting ? force * 2f : force;
+
         Debug.Log($"[StartSliding] Sliding started. Direction: {slidingDirection}, Speed: {slidingSpeed}, Force: {force}");
     }
+
 
     private void HandleSliding()
     {
