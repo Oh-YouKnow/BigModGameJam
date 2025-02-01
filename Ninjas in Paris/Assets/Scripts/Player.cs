@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        
         Vector3 input = Vector3.zero;
 
         if (Input.GetButton("Left")) input += new Vector3(-1, 0, 0);
@@ -85,6 +86,7 @@ public class Player : MonoBehaviour
         transform.position += input * Time.deltaTime * speed;
         if (input.magnitude > 0)
         {
+            playerAnimation?.SetBlocking(false);
             playerAnimation?.SetRunning(true);
         }
         else
@@ -120,7 +122,7 @@ public class Player : MonoBehaviour
 
                     Vector3 pushDirection = (transform.position - Enemy.transform.position).normalized;
                     Debug.Log($"[Parry] Calculated Push Direction: {pushDirection}");
-
+                    playerAnimation?.SetBlocking(true);
                     StartSliding(pushDirection);
                     //zoom over to them
 
@@ -154,6 +156,7 @@ public class Player : MonoBehaviour
         
         if (Input.GetButtonDown("Attack"))
         {
+            playerAnimation?.SetBlocking(false);
             PerformSlash();
         }
 
@@ -224,6 +227,7 @@ public class Player : MonoBehaviour
     }
 
     public void takeDamage() {
+        playerAnimation?.SetBlocking(false);
         health--;
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();

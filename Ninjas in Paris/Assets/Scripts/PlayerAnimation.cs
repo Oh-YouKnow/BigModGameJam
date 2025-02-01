@@ -21,7 +21,14 @@ public class PlayerAnimation : MonoBehaviour
         }
     }
 
-    
+    public void SetBlocking(bool isBlocking)
+    {
+        if (YeAnimator != null)
+        {
+            YeAnimator.SetBool("Blocking", isBlocking);
+        }
+    }
+
     public void TriggerAttack()
     {
         if (YeAnimator != null)
