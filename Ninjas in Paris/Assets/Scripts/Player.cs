@@ -187,6 +187,7 @@ public class Player : MonoBehaviour
         hitPrefab.SetActive(true);
         yield return new WaitForSeconds(hitDuration);
         hitPrefab.SetActive(false);
+        playerAnimation?.SetBlocking(false);
     }
 
 

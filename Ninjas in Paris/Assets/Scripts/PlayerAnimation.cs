@@ -39,7 +39,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         YeAnimator.SetTrigger("Attack");
         yield return new WaitForSeconds(waitTime);
-        YeAnimator.SetTrigger("Attack");
+        YeAnimator.SetTrigger("Idle");
         Debug.Log("Finished waiting after attack animation.");
     }
 }
