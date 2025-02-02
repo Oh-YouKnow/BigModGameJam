@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private GameObject damageSprite; // Assign in Inspector
+    [SerializeField] private float damageSpriteDuration = 0.5f; // Time the sprite is visible
 
 
+    [SerializeField] private float parryWindowDuration = 0.5f; // Time where all attacks are negated
+    
     [SerializeField] float speed;
     [SerializeField] float counterSpeed;
     [SerializeField] float counterDistance;
@@ -38,7 +42,7 @@ public class Player : MonoBehaviour
     public int combo = 0;
     [SerializeField] private GameObject comboText;
 
-
+    private bool isParrying = false;
     private int health = 5;
     private int maxHealth = 5;
 
@@ -59,6 +63,11 @@ public class Player : MonoBehaviour
         cylinderHitbox.SetActive(false); // Hide initially
 
         healthUI = GameObject.Find("HeartUI");
+        if (damageAnimatorController != null)
+        {
+            damageAnimator = gameObject.AddComponent<Animator>();
+            damageAnimator.runtimeAnimatorController = damageAnimatorController;
+        }
     }
 
 
@@ -173,13 +182,22 @@ public class Player : MonoBehaviour
         {
             float spriteDirection = Mathf.Sign(sprite.localScale.x); // Determine sprite direction
             hitPrefab.transform.localPosition = new Vector3(
-                Mathf.Abs(hitPrefab.transform.localPosition.x) * spriteDirection, // Adjust hit prefab position based on sprite direction
+                Mathf.Abs(hitPrefab.transform.localPosition.x) * spriteDirection,
                 hitPrefab.transform.localPosition.y,
                 hitPrefab.transform.localPosition.z
             );
             StartCoroutine(EnableHitPrefab());
         }
+
+        StartCoroutine(ParryWindow());
         Debug.Log("[Block] Player blocked an attack.");
+    }
+
+    private IEnumerator ParryWindow()
+    {
+        isParrying = true;
+        yield return new WaitForSeconds(parryWindowDuration);
+        isParrying = false;
     }
 
     private IEnumerator EnableHitPrefab()
@@ -258,13 +276,36 @@ public class Player : MonoBehaviour
         comboText.GetComponent<ComboText>().increaseCombo(combo);
     }
 
-    public void takeDamage() {
+    [SerializeField] private RuntimeAnimatorController damageAnimatorController; // Assign this in the Inspector
+    private Animator damageAnimator;
+
+
+    public void takeDamage()
+    {
+        if (isParrying)
+        {
+            Debug.Log("[takeDamage] Attack was parried! No damage taken.");
+            return;
+        }
+
         health--;
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
-
         healthUI.GetComponent<HealthUI>().takeDamage(health);
+
+        
+        if (damageSprite != null)
+        {
+            StartCoroutine(EnableDamageSprite());
+        }
     }
+    private IEnumerator EnableDamageSprite()
+    {
+        damageSprite.SetActive(true);
+        yield return new WaitForSeconds(damageSpriteDuration);
+        damageSprite.SetActive(false);
+    }
+
     private IEnumerator ActivateHitbox()
     {
         cylinderHitbox.SetActive(true); // Enable hitbox

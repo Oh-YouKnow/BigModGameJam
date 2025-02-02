@@ -37,4 +37,27 @@ public class BasicEnemyAnim : MonoBehaviour
         animator.SetTrigger("Attack");
         Debug.Log("Finished waiting after attack animation.");
     }
+    public void TriggerDeath()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("Dead");
+        }
+    }
+
+
+    public void TriggerAttack2()
+    {
+        if (animator != null)
+        {
+            StartCoroutine(TriggerAttack2WithWait());
+        }
+    }
+    private IEnumerator TriggerAttack2WithWait()
+    {
+        animator.SetTrigger("Attack2");
+        yield return new WaitForSeconds(waitTime);
+        animator.SetTrigger("Attack2");
+        Debug.Log("Finished waiting after attack animation.");
+    }
 }
