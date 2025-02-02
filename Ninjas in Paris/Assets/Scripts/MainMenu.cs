@@ -15,4 +15,10 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    //Used to go back to mainmenu from Lose/Win Screens
+    public void Back()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
