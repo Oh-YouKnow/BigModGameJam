@@ -10,13 +10,22 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] GameObject dialogueName;
     [SerializeField] GameObject Dialogue;
 
+    [SerializeField] AudioClip[] yeSounds;
+    [SerializeField] AudioClip[] jonesSounds;
+
     private string finishedText;
     private float textTimer = 0;
     private float imageTimer = 0;
     Sprite dialogueImage1;
     Sprite altdialogueImage2;
 
+    private AudioSource source;
+
     // Update is called once per frame
+
+    private void Start() {
+        source = GetComponent<AudioSource>();
+    }
     public void createDialogueBox(Sprite image1, Sprite image2, string text, string name) {
 
         
@@ -29,7 +38,9 @@ public class DialogueBox : MonoBehaviour
     }
 
     private void Update() {
+
         if (finishedText != "" && textTimer < 0) {
+            
             Dialogue.GetComponent<TextMeshProUGUI>().text += finishedText.Substring(0, 1);
             finishedText = finishedText.Substring(1);
             textTimer = .03f;
@@ -42,6 +53,17 @@ public class DialogueBox : MonoBehaviour
         else if (imageTimer < .3f) {
             dialogueImage.GetComponent<SpriteRenderer>().sprite = dialogueImage1;
             
+        }
+
+        if (!source.isPlaying && finishedText != "") {
+            if(dialogueName.GetComponent<TextMeshProUGUI>().text == "Jones") {
+                source.clip = jonesSounds[Random.Range(0, jonesSounds.Length - 1)];
+            }
+            else {
+                source.clip = yeSounds[Random.Range(0, yeSounds.Length - 1)];
+            }
+            
+            source.Play();
         }
         //dialogueImage.GetComponent<SpriteRenderer>().sprite[1];
         textTimer -= Time.deltaTime;

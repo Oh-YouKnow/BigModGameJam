@@ -15,6 +15,8 @@ public class DialogueController : MonoBehaviour
 
     [SerializeField] GameObject[] disabled;
 
+    [SerializeField] AudioClip gasp;
+
     private GameObject currentDialogue;
 
     private int dialogueState = 0;
@@ -34,6 +36,7 @@ public class DialogueController : MonoBehaviour
         if (currentDialogue) Destroy(currentDialogue);
         currentDialogue = Instantiate(DialogueBox, transform);
         currentDialogue.GetComponent<DialogueBox>().createDialogueBox(image1, image2, text, name);
+
     }
 
     private void Update() {
@@ -88,7 +91,10 @@ public class DialogueController : MonoBehaviour
                             createDialogue("AAAHHHH NINJASSSS AAAHHHH", "Kanye", kanyeSprite1, kanyeSprite2);
                             break;
                     }
-                    
+
+
+                    currentDialogue.GetComponent<AudioSource>().clip = gasp;
+                    currentDialogue.GetComponent<AudioSource>().Play();
                     break;
                 default:
                     startGame();
