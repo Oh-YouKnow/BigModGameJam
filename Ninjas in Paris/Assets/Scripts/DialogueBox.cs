@@ -57,10 +57,10 @@ public class DialogueBox : MonoBehaviour
 
         if (!source.isPlaying && finishedText != "") {
             if(dialogueName.GetComponent<TextMeshProUGUI>().text == "Jones") {
-                source.clip = jonesSounds[Random.Range(0, jonesSounds.Length - 1)];
+                source.clip = jonesSounds[Random.Range(0, jonesSounds.Length)];
             }
             else {
-                source.clip = yeSounds[Random.Range(0, yeSounds.Length - 1)];
+                source.clip = yeSounds[Random.Range(0, yeSounds.Length)];
             }
             
             source.Play();

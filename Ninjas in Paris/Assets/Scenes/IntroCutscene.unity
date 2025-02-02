@@ -822,6 +822,7 @@ MonoBehaviour:
   kanyeSprite2: {fileID: 205781960, guid: 3736471d26c919d4690d5bd00088c71e, type: 3}
   jonesSprite2: {fileID: 1897327022, guid: cfef18db2bf2f634b8e128a91e2e12b4, type: 3}
   disabled: []
+  gasp: {fileID: 8300000, guid: d235bb7fc0d5b0346a9d86fbc7211ed7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

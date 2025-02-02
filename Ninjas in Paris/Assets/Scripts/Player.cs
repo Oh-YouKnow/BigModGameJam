@@ -39,6 +39,11 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject comboText;
 
 
+    [SerializeField] AudioClip damageSound;
+    [SerializeField] AudioClip attackSound;
+    [SerializeField] AudioClip[] counterSound;
+
+
     private int health = 5;
     private int maxHealth = 5;
 
@@ -50,7 +55,7 @@ public class Player : MonoBehaviour
     private Vector3 oPlayerPosition;
     private Vector3 targetPosition;
 
-
+    private AudioSource source;
 
     void Start()
     {
@@ -59,6 +64,8 @@ public class Player : MonoBehaviour
         cylinderHitbox.SetActive(false); // Hide initially
 
         healthUI = GameObject.Find("HeartUI");
+
+        source = GetComponent<AudioSource>();
     }
 
 
@@ -180,6 +187,9 @@ public class Player : MonoBehaviour
             StartCoroutine(EnableHitPrefab());
         }
         Debug.Log("[Block] Player blocked an attack.");
+
+        source.clip = counterSound[UnityEngine.Random.Range(0, counterSound.Length)]; ;
+        source.Play();
     }
 
     private IEnumerator EnableHitPrefab()
@@ -244,6 +254,9 @@ public class Player : MonoBehaviour
 
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
+
+        source.clip = attackSound;
+        source.Play();
     }
 
     // Duh
@@ -264,6 +277,9 @@ public class Player : MonoBehaviour
         comboText.GetComponent<ComboText>().killCombo();
 
         healthUI.GetComponent<HealthUI>().takeDamage(health);
+
+        source.clip = damageSound;
+        source.Play();
     }
     private IEnumerator ActivateHitbox()
     {
