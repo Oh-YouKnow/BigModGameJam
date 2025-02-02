@@ -11,13 +11,21 @@ public class EnemySpawner : MonoBehaviour
     public float secondsBetweenSpawns = 2;
     public int currentEnemyCount;
     float _elapsedTime;
+    public Transform waveSpawnEnemy;
     
     
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
+        if (waveSpawnEnemy != null)
+        {
+            Vector3 spawnPos = RandomSpawnPosition();
+            Instantiate(waveSpawnEnemy, spawnPos, Quaternion.identity);
+        }
         currentEnemyCount = CountEnemy();
         Debug.Log("Counted");
+        
     }
 
     // Update is called once per frame
