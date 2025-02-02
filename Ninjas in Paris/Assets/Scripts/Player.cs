@@ -210,6 +210,8 @@ public class Player : MonoBehaviour
 
 
 
+    [SerializeField] private float hitboxScalePerCombo = 1f;
+    
 
     private void PerformSlash()
     {
@@ -218,15 +220,19 @@ public class Player : MonoBehaviour
 
         float facingDirection = sprite.localScale.x > 0 ? 1 : -1;
 
-        // Scale hitbox
-        float baseHitboxSize = cylinderHitboxPrefab.transform.localScale.x;
-        float scaledHitboxSize = baseHitboxSize * hitboxScaleFactor;
+        // Base hitbox size
+        Vector3 baseScale = cylinderHitboxPrefab.transform.localScale;
 
-        float hitboxOffset = (scaledHitboxSize / 2) + 0.5f; // Offset hitbox in front of player
+        // Increase size based on combo count
+        float scaleMultiplier = 1 + (hitboxScalePerCombo * combo);
+        Vector3 newHitboxScale = baseScale * scaleMultiplier;
+
+        // Keep the hitbox in front of the player, adjusting for new size
+        float hitboxOffset = (baseScale.x / 2) * facingDirection;
 
         // Determine spawn position
         Vector3 spawnPosition = new Vector3(
-            transform.position.x + (hitboxOffset * facingDirection),
+            transform.position.x + hitboxOffset,
             transform.position.y,
             transform.position.z
         );
@@ -251,10 +257,11 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log($"[PerformSlash] Spawned hitbox at {spawnPosition} with scale {hitboxScaleFactor}, Last Combo Level: {lastCombo}");
+            Debug.Log($"[PerformSlash] Spawned hitbox at {spawnPosition} with scale {newHitboxScale}, Last Combo Level: {lastCombo}");
         }
 
-        spawnedHitbox.transform.localScale *= hitboxScaleFactor;
+        // Apply the new hitbox scale
+        spawnedHitbox.transform.localScale = newHitboxScale;
 
         Destroy(spawnedHitbox, hitboxLifetime);
 
@@ -263,6 +270,7 @@ public class Player : MonoBehaviour
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
     }
+
 
     // Duh
     public int GetLastCombo()

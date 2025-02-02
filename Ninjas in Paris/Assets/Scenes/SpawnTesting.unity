@@ -806,7 +806,8 @@ MonoBehaviour:
   combo: 0
   comboText: {fileID: 1916566690}
   hitPrefab: {fileID: 52157759}
-  hitDuration: 0.5
+  hitDuration: 1
+  hitboxScalePerCombo: 0.05
   damageAnimatorController: {fileID: 9100000, guid: ec343450fd562684b88f7ff826ba492f,
     type: 2}
 --- !u!65 &450269935
