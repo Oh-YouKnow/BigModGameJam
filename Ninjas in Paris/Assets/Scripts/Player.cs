@@ -64,6 +64,8 @@ public class Player : MonoBehaviour
 
     private AudioSource source;
 
+    private float counterCooldown = 0f;
+
 
 
     void Start()
@@ -128,8 +130,9 @@ public class Player : MonoBehaviour
             transform.position = targetPosition + (oPlayerPosition - targetPosition) * (moveTimer / counterSpeed);
         }
 
-        if (Input.GetButtonDown("Counter") && moveTimer <= 0) {
-            
+        counterCooldown -= Time.deltaTime;
+        if (Input.GetButtonDown("Counter") && moveTimer <= 0 && counterCooldown <= 0) {
+            counterCooldown = .2f;
             GameObject[] enemyList = GameObject.FindGameObjectsWithTag("enemy");
             Array.Sort(enemyList, DistanceComparison); //sort by distance to player
             foreach (GameObject Enemy in enemyList) {
