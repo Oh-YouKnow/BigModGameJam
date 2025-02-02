@@ -237,7 +237,7 @@ public class Player : MonoBehaviour
             transform.position.z
         );
 
-        // Rotate that shi
+        // Rotate that shis
         Quaternion hitboxRotation = Quaternion.Euler(0, facingDirection > 0 ? 0 : 180, 0);
 
         if (cylinderHitboxPrefab == null)
@@ -271,6 +271,10 @@ public class Player : MonoBehaviour
         comboText.GetComponent<ComboText>().killCombo();
     }
 
+    public bool IsParrying()
+    {
+        return isParrying;
+    }
 
     // Duh
     public int GetLastCombo()
