@@ -20,8 +20,14 @@ public class PlayerAnimation : MonoBehaviour
             YeAnimator.SetBool("Running", isRunning);
         }
     }
+    public void SetBlocking(bool isBlocking)
+    {
+        if (YeAnimator != null)
+        {
+            YeAnimator.SetBool("Blocking", isBlocking);
+        }
+    }
 
-    
     public void TriggerAttack()
     {
         if (YeAnimator != null)
@@ -33,7 +39,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         YeAnimator.SetTrigger("Attack");
         yield return new WaitForSeconds(waitTime);
-        YeAnimator.SetTrigger("Attack");
+        YeAnimator.SetTrigger("Idle");
         Debug.Log("Finished waiting after attack animation.");
     }
 }

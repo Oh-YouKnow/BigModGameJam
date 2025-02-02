@@ -122,11 +122,10 @@ public class Player : MonoBehaviour
 
                     Vector3 pushDirection = (transform.position - Enemy.transform.position).normalized;
                     Debug.Log($"[Parry] Calculated Push Direction: {pushDirection}");
-<<<<<<< Updated upstream
-=======
+
                     playerAnimation?.SetBlocking(true);
                     Block();
->>>>>>> Stashed changes
+
 
                     StartSliding(pushDirection);
                     //zoom over to them
@@ -188,6 +187,7 @@ public class Player : MonoBehaviour
         hitPrefab.SetActive(true);
         yield return new WaitForSeconds(hitDuration);
         hitPrefab.SetActive(false);
+        playerAnimation?.SetBlocking(false);
     }
 
 
