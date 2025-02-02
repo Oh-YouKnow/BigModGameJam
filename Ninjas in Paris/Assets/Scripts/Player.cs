@@ -5,12 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameObject damageSprite; // Assign in Inspector
-    [SerializeField] private float damageSpriteDuration = 0.5f; // Time the sprite is visible
 
 
-    [SerializeField] private float parryWindowDuration = 0.5f; // Time where all attacks are negated
-    
     [SerializeField] float speed;
     [SerializeField] float counterSpeed;
     [SerializeField] float counterDistance;
@@ -42,7 +38,12 @@ public class Player : MonoBehaviour
     public int combo = 0;
     [SerializeField] private GameObject comboText;
 
-    private bool isParrying = false;
+
+    [SerializeField] AudioClip damageSound;
+    [SerializeField] AudioClip attackSound;
+    [SerializeField] AudioClip[] counterSound;
+
+
     private int health = 5;
     private int maxHealth = 5;
 
@@ -63,11 +64,8 @@ public class Player : MonoBehaviour
         cylinderHitbox.SetActive(false); // Hide initially
 
         healthUI = GameObject.Find("HeartUI");
-        if (damageAnimatorController != null)
-        {
-            damageAnimator = gameObject.AddComponent<Animator>();
-            damageAnimator.runtimeAnimatorController = damageAnimatorController;
-        }
+
+        source = GetComponent<AudioSource>();
     }
 
 
@@ -182,22 +180,16 @@ public class Player : MonoBehaviour
         {
             float spriteDirection = Mathf.Sign(sprite.localScale.x); // Determine sprite direction
             hitPrefab.transform.localPosition = new Vector3(
-                Mathf.Abs(hitPrefab.transform.localPosition.x) * spriteDirection,
+                Mathf.Abs(hitPrefab.transform.localPosition.x) * spriteDirection, // Adjust hit prefab position based on sprite direction
                 hitPrefab.transform.localPosition.y,
                 hitPrefab.transform.localPosition.z
             );
             StartCoroutine(EnableHitPrefab());
         }
-
-        StartCoroutine(ParryWindow());
         Debug.Log("[Block] Player blocked an attack.");
-    }
 
-    private IEnumerator ParryWindow()
-    {
-        isParrying = true;
-        yield return new WaitForSeconds(parryWindowDuration);
-        isParrying = false;
+        source.clip = counterSound[UnityEngine.Random.Range(0, counterSound.Length)]; ;
+        source.Play();
     }
 
     private IEnumerator EnableHitPrefab()
@@ -210,8 +202,6 @@ public class Player : MonoBehaviour
 
 
 
-    [SerializeField] private float hitboxScalePerCombo = 1f;
-    
 
     private void PerformSlash()
     {
@@ -220,24 +210,20 @@ public class Player : MonoBehaviour
 
         float facingDirection = sprite.localScale.x > 0 ? 1 : -1;
 
-        // Base hitbox size
-        Vector3 baseScale = cylinderHitboxPrefab.transform.localScale;
+        // Scale hitbox
+        float baseHitboxSize = cylinderHitboxPrefab.transform.localScale.x;
+        float scaledHitboxSize = baseHitboxSize * hitboxScaleFactor;
 
-        // Increase size based on combo count
-        float scaleMultiplier = 1 + (hitboxScalePerCombo * combo);
-        Vector3 newHitboxScale = baseScale * scaleMultiplier;
-
-        // Keep the hitbox in front of the player, adjusting for new size
-        float hitboxOffset = (baseScale.x / 2) * facingDirection;
+        float hitboxOffset = (scaledHitboxSize / 2) + 0.5f; // Offset hitbox in front of player
 
         // Determine spawn position
         Vector3 spawnPosition = new Vector3(
-            transform.position.x + hitboxOffset,
+            transform.position.x + (hitboxOffset * facingDirection),
             transform.position.y,
             transform.position.z
         );
 
-        // Rotate that shis
+        // Rotate that shi
         Quaternion hitboxRotation = Quaternion.Euler(0, facingDirection > 0 ? 0 : 180, 0);
 
         if (cylinderHitboxPrefab == null)
@@ -257,11 +243,10 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log($"[PerformSlash] Spawned hitbox at {spawnPosition} with scale {newHitboxScale}, Last Combo Level: {lastCombo}");
+            Debug.Log($"[PerformSlash] Spawned hitbox at {spawnPosition} with scale {hitboxScaleFactor}, Last Combo Level: {lastCombo}");
         }
 
-        // Apply the new hitbox scale
-        spawnedHitbox.transform.localScale = newHitboxScale;
+        spawnedHitbox.transform.localScale *= hitboxScaleFactor;
 
         Destroy(spawnedHitbox, hitboxLifetime);
 
@@ -269,11 +254,9 @@ public class Player : MonoBehaviour
 
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
-    }
 
-    public bool IsParrying()
-    {
-        return isParrying;
+        source.clip = attackSound;
+        source.Play();
     }
 
     // Duh
@@ -288,36 +271,16 @@ public class Player : MonoBehaviour
         comboText.GetComponent<ComboText>().increaseCombo(combo);
     }
 
-    [SerializeField] private RuntimeAnimatorController damageAnimatorController; // Assign this in the Inspector
-    private Animator damageAnimator;
-
-
-    public void takeDamage()
-    {
-        if (isParrying)
-        {
-            Debug.Log("[takeDamage] Attack was parried! No damage taken.");
-            return;
-        }
-
+    public void takeDamage() {
         health--;
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
+
         healthUI.GetComponent<HealthUI>().takeDamage(health);
 
-        
-        if (damageSprite != null)
-        {
-            StartCoroutine(EnableDamageSprite());
-        }
+        source.clip = damageSound;
+        source.Play();
     }
-    private IEnumerator EnableDamageSprite()
-    {
-        damageSprite.SetActive(true);
-        yield return new WaitForSeconds(damageSpriteDuration);
-        damageSprite.SetActive(false);
-    }
-
     private IEnumerator ActivateHitbox()
     {
         cylinderHitbox.SetActive(true); // Enable hitbox

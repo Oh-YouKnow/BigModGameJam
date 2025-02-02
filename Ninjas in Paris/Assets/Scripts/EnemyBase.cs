@@ -54,22 +54,14 @@ public abstract class EnemyBase : MonoBehaviour
             StartCoroutine(Die());
         }
     }
-
-    private void Die()
+    
+    private IEnumerator Die()
     {
         yield return new WaitForSeconds(deathTimer);
         Debug.Log($"{gameObject.name} has been destroyed!");
-        moveSpeed = 0;
-        BasicEnemy enemy = GetComponent<BasicEnemy>();
-        if (enemy != null)
-        {
-            enemy.Die(); // Come to die, harry potter
-            return;
-        }
-
-        Destroy(gameObject); // Fallback if no animation exists
-
-        // Find the Enemy Spawner and communicate taht an enemy has died.
+        Destroy(gameObject);
+        
+        // Find the Enemy Spawner and communicate an enemy has died.
         spawner.currentEnemyCount--;
     }
 
