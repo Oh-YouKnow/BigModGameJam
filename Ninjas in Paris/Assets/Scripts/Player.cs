@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private GameObject damageSprite; // Assign in Inspector
+    [SerializeField] private float damageSpriteDuration = 0.5f; // Time the sprite is visible
 
 
+    [SerializeField] private float parryWindowDuration = 0.5f; // Time where all attacks are negated
+    
     [SerializeField] float speed;
     [SerializeField] float counterSpeed;
     [SerializeField] float counterDistance;
@@ -38,12 +42,7 @@ public class Player : MonoBehaviour
     public int combo = 0;
     [SerializeField] private GameObject comboText;
 
-
-    [SerializeField] AudioClip damageSound;
-    [SerializeField] AudioClip attackSound;
-    [SerializeField] AudioClip[] counterSound;
-
-
+    private bool isParrying = false;
     private int health = 5;
     private int maxHealth = 5;
 
@@ -55,7 +54,7 @@ public class Player : MonoBehaviour
     private Vector3 oPlayerPosition;
     private Vector3 targetPosition;
 
-    private AudioSource source;
+
 
     void Start()
     {
@@ -64,8 +63,11 @@ public class Player : MonoBehaviour
         cylinderHitbox.SetActive(false); // Hide initially
 
         healthUI = GameObject.Find("HeartUI");
-
-        source = GetComponent<AudioSource>();
+        if (damageAnimatorController != null)
+        {
+            damageAnimator = gameObject.AddComponent<Animator>();
+            damageAnimator.runtimeAnimatorController = damageAnimatorController;
+        }
     }
 
 
@@ -180,16 +182,22 @@ public class Player : MonoBehaviour
         {
             float spriteDirection = Mathf.Sign(sprite.localScale.x); // Determine sprite direction
             hitPrefab.transform.localPosition = new Vector3(
-                Mathf.Abs(hitPrefab.transform.localPosition.x) * spriteDirection, // Adjust hit prefab position based on sprite direction
+                Mathf.Abs(hitPrefab.transform.localPosition.x) * spriteDirection,
                 hitPrefab.transform.localPosition.y,
                 hitPrefab.transform.localPosition.z
             );
             StartCoroutine(EnableHitPrefab());
         }
-        Debug.Log("[Block] Player blocked an attack.");
 
-        source.clip = counterSound[UnityEngine.Random.Range(0, counterSound.Length)]; ;
-        source.Play();
+        StartCoroutine(ParryWindow());
+        Debug.Log("[Block] Player blocked an attack.");
+    }
+
+    private IEnumerator ParryWindow()
+    {
+        isParrying = true;
+        yield return new WaitForSeconds(parryWindowDuration);
+        isParrying = false;
     }
 
     private IEnumerator EnableHitPrefab()
@@ -202,6 +210,8 @@ public class Player : MonoBehaviour
 
 
 
+    [SerializeField] private float hitboxScalePerCombo = 1f;
+    
 
     private void PerformSlash()
     {
@@ -210,20 +220,24 @@ public class Player : MonoBehaviour
 
         float facingDirection = sprite.localScale.x > 0 ? 1 : -1;
 
-        // Scale hitbox
-        float baseHitboxSize = cylinderHitboxPrefab.transform.localScale.x;
-        float scaledHitboxSize = baseHitboxSize * hitboxScaleFactor;
+        // Base hitbox size
+        Vector3 baseScale = cylinderHitboxPrefab.transform.localScale;
 
-        float hitboxOffset = (scaledHitboxSize / 2) + 0.5f; // Offset hitbox in front of player
+        // Increase size based on combo count
+        float scaleMultiplier = 1 + (hitboxScalePerCombo * combo);
+        Vector3 newHitboxScale = baseScale * scaleMultiplier;
+
+        // Keep the hitbox in front of the player, adjusting for new size
+        float hitboxOffset = (baseScale.x / 2) * facingDirection;
 
         // Determine spawn position
         Vector3 spawnPosition = new Vector3(
-            transform.position.x + (hitboxOffset * facingDirection),
+            transform.position.x + hitboxOffset,
             transform.position.y,
             transform.position.z
         );
 
-        // Rotate that shi
+        // Rotate that shis
         Quaternion hitboxRotation = Quaternion.Euler(0, facingDirection > 0 ? 0 : 180, 0);
 
         if (cylinderHitboxPrefab == null)
@@ -243,10 +257,11 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log($"[PerformSlash] Spawned hitbox at {spawnPosition} with scale {hitboxScaleFactor}, Last Combo Level: {lastCombo}");
+            Debug.Log($"[PerformSlash] Spawned hitbox at {spawnPosition} with scale {newHitboxScale}, Last Combo Level: {lastCombo}");
         }
 
-        spawnedHitbox.transform.localScale *= hitboxScaleFactor;
+        // Apply the new hitbox scale
+        spawnedHitbox.transform.localScale = newHitboxScale;
 
         Destroy(spawnedHitbox, hitboxLifetime);
 
@@ -254,9 +269,11 @@ public class Player : MonoBehaviour
 
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
+    }
 
-        source.clip = attackSound;
-        source.Play();
+    public bool IsParrying()
+    {
+        return isParrying;
     }
 
     // Duh
@@ -271,16 +288,36 @@ public class Player : MonoBehaviour
         comboText.GetComponent<ComboText>().increaseCombo(combo);
     }
 
-    public void takeDamage() {
+    [SerializeField] private RuntimeAnimatorController damageAnimatorController; // Assign this in the Inspector
+    private Animator damageAnimator;
+
+
+    public void takeDamage()
+    {
+        if (isParrying)
+        {
+            Debug.Log("[takeDamage] Attack was parried! No damage taken.");
+            return;
+        }
+
         health--;
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
-
         healthUI.GetComponent<HealthUI>().takeDamage(health);
 
-        source.clip = damageSound;
-        source.Play();
+        
+        if (damageSprite != null)
+        {
+            StartCoroutine(EnableDamageSprite());
+        }
     }
+    private IEnumerator EnableDamageSprite()
+    {
+        damageSprite.SetActive(true);
+        yield return new WaitForSeconds(damageSpriteDuration);
+        damageSprite.SetActive(false);
+    }
+
     private IEnumerator ActivateHitbox()
     {
         cylinderHitbox.SetActive(true); // Enable hitbox
