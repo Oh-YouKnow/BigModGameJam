@@ -43,6 +43,10 @@ public class Player : MonoBehaviour
     [SerializeField] AudioClip attackSound;
     [SerializeField] AudioClip[] counterSound;
 
+    [SerializeField] GameObject kanyeFace;
+    [SerializeField] GameObject kanyeYell;
+    private float damageTimer = 0f;
+
     public int combo = 0;
     [SerializeField] private GameObject comboText;
 
@@ -94,7 +98,10 @@ public class Player : MonoBehaviour
             
         }
 
+        kanyeFace.SetActive(damageTimer <= 0);
+        kanyeYell.SetActive(damageTimer > 0);
 
+        damageTimer -= Time.deltaTime;
 
         input = Vector3.Normalize(input);
 
@@ -310,6 +317,8 @@ public class Player : MonoBehaviour
 
         source.clip = damageSound;
         source.Play();
+
+        damageTimer = 1f;
 
         if (isParrying)
         {
