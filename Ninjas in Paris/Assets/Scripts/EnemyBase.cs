@@ -23,6 +23,7 @@ public abstract class EnemyBase : MonoBehaviour
     public EnemySpawner spawner;
     public bool isParryable;
     public bool isCountered;
+    public bool isDead;
 
     // Start is called before the first frame update
     public void Start()
@@ -57,6 +58,11 @@ public abstract class EnemyBase : MonoBehaviour
     
     private IEnumerator Die()
     {
+        moveSpeed = 0;
+        isParryable = false;
+        attackMarker.SetActive(false);
+        damageArea.SetActive(false);
+        armorClassText.text = "";
         yield return new WaitForSeconds(deathTimer);
         Debug.Log($"{gameObject.name} has been destroyed!");
         Destroy(gameObject);
