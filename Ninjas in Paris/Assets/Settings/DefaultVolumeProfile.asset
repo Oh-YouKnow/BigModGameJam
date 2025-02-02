@@ -345,13 +345,13 @@ MonoBehaviour:
   active: 1
   type:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   intensity:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.265
   response:
     m_OverrideState: 1
-    m_Value: 0.8
+    m_Value: 0.554
   texture:
     m_OverrideState: 1
     m_Value: {fileID: 0}
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf1aba9553839d41ae37dd52e9ebcce, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   mode:
     m_OverrideState: 1
     m_Value: 0
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   color:
     m_OverrideState: 1
     m_Value: {r: 0, g: 0, b: 0, a: 1}
@@ -699,7 +699,7 @@ MonoBehaviour:
     m_Value: 0
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.026
   rounded:
     m_OverrideState: 1
     m_Value: 0
@@ -718,7 +718,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.3
+    m_Value: 0.274
 --- !u!114 &5845038911624489504
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -798,10 +798,10 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.03
+    m_Value: 0.96
   intensity:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 0.38
   scatter:
     m_OverrideState: 1
     m_Value: 0.429
