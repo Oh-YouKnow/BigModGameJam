@@ -94,12 +94,7 @@ public class BasicEnemy : EnemyBase
                 break;
         }
     }
-    private IEnumerator DisableDamageAreaAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        damageArea.SetActive(false);
-    }
-
+    
     private void FollowPlayer()
     {
         // Move towards the player
@@ -109,26 +104,4 @@ public class BasicEnemy : EnemyBase
         transform.localScale = new Vector3(spriteScaleX, transform.localScale.y, transform.localScale.z);
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
-    private bool isDead = false;
-
-    public void Die()
-    {
-        if (isDead) return; // Prevent multiple calls
-        moveSpeed = 0; // Stop movement
-        isDead = true;
-        //Make enemy non interactable
-        isParryable = false;
-        _state = State.Idle;
-        attackMarker.SetActive(false);
-        damageArea.SetActive(false);
-        _animation.TriggerDeath();
-        StartCoroutine(DestroyAfterAnimation());
-    }
-
-    private IEnumerator DestroyAfterAnimation()
-    {
-        yield return new WaitForSeconds(1.5f); // Adjust based on animation length
-        Destroy(gameObject);
-    }
-
 }

@@ -56,7 +56,7 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
         moveSpeed = 0;
         isParryable = false;
@@ -65,14 +65,6 @@ public abstract class EnemyBase : MonoBehaviour
         armorClassText.text = "";
         yield return new WaitForSeconds(deathTimer);
         Debug.Log($"{gameObject.name} has been destroyed!");
-        moveSpeed = 0;
-        BasicEnemy enemy = GetComponent<BasicEnemy>();
-        if (enemy != null)
-        {
-            enemy.Die(); // Come to die, harry potter
-            return;
-        }
-
         Destroy(gameObject); // Fallback if no animation exists
 
         // Find the Enemy Spawner and communicate taht an enemy has died.
