@@ -6,14 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
     path: Assets/Scenes/SpawnTesting.unity
     guid: 10adbf8261a491f4b9f84e5ebc7ed12b
   - enabled: 1
     path: Assets/Scenes/IntroCutscene.unity
     guid: b2417dd7f86639142bf64c6f36782fb1
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 96a6801aac263de45a664aa37fd15118
+  - enabled: 1
+    path: Assets/Scenes/Lose.unity
+    guid: 831074aa352e80b4da01a52fa388ffbf
+  - enabled: 1
+    path: Assets/Scenes/Win.unity
+    guid: 50eb3b5aba4fa444c95be9ceaee3e536
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 8cd0bd97a7dfd67449bf7b5439cffbe6,
       type: 2}
