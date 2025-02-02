@@ -7,7 +7,7 @@ using TMPro;
 public abstract class EnemyBase : MonoBehaviour
 {
     // Bare minimum stats for enemies
-    
+
     [SerializeField] public float moveSpeed = 10f; // default values
     [SerializeField] public float attackDistance = 5f;
     [SerializeField] public GameObject damageArea;
@@ -32,7 +32,7 @@ public abstract class EnemyBase : MonoBehaviour
     }
 
     // Update is called once per frame
-    
+
     public void TakeDamage(int damage)
     {
         Debug.Log("TakeDamage Called");
@@ -72,7 +72,8 @@ public abstract class EnemyBase : MonoBehaviour
     }
 
     // isCountered allows for any enemy to have individual countered states.
-    public void Counter() {
+    public void Counter()
+    {
         Debug.Log($"{gameObject.name} has been countered!");
         isCountered = true;
         isParryable = false;
