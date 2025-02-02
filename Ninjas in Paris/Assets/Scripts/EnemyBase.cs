@@ -23,6 +23,7 @@ public abstract class EnemyBase : MonoBehaviour
     public EnemySpawner spawner;
     public bool isParryable;
     public bool isCountered;
+    public bool isDead;
 
     // Start is called before the first frame update
     public void Start()
@@ -54,14 +55,18 @@ public abstract class EnemyBase : MonoBehaviour
             StartCoroutine(Die());
         }
     }
-    
     private IEnumerator Die()
     {
+        moveSpeed = 0;
+        isParryable = false;
+        attackMarker.SetActive(false);
+        damageArea.SetActive(false);
+        armorClassText.text = "";
         yield return new WaitForSeconds(deathTimer);
         Debug.Log($"{gameObject.name} has been destroyed!");
-        Destroy(gameObject);
-        
-        // Find the Enemy Spawner and communicate an enemy has died.
+        Destroy(gameObject); // Fallback if no animation exists
+
+        // Find the Enemy Spawner and communicate taht an enemy has died.
         spawner.currentEnemyCount--;
     }
 
