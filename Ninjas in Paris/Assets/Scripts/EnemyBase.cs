@@ -17,6 +17,7 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] public TextMeshPro armorClassText;
     public float attackTimer;
     public float idleTimer;
+    public float deathTimer;
 
     public Player player;
     public EnemySpawner spawner;
@@ -50,12 +51,13 @@ public abstract class EnemyBase : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            StartCoroutine(Die());
         }
     }
     
-    private void Die()
+    private IEnumerator Die()
     {
+        yield return new WaitForSeconds(deathTimer);
         Debug.Log($"{gameObject.name} has been destroyed!");
         Destroy(gameObject);
         

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BasicEnemy : EnemyBase
 {
-    enum State {Idle, Attack}
+    enum State {Idle, Attack, Dead}
     private State _state = State.Idle;
     private BasicEnemyAnim _animation;
     // Start is called before the first frame update
@@ -24,7 +24,7 @@ public class BasicEnemy : EnemyBase
             armorClassText.transform.rotation = Camera.main.transform.rotation; // Always face the camera
         }
         // If not attacking, follow player.
-        if (_state == State.Idle && player != null)
+        if (_state == State.Idle && player != null && currentHealth > 0)
         {
             FollowPlayer();
         }
@@ -45,6 +45,12 @@ public class BasicEnemy : EnemyBase
             _animation.SetRunning(false);
             isCountered = false;
             _state = State.Idle;
+        }
+
+        if (currentHealth <= 0)
+        {
+            Debug.Log("Enemy Dead");
+            _animation.TriggerDeath();
         }
 
         switch (_state) {

@@ -37,4 +37,9 @@ public class BasicEnemyAnim : MonoBehaviour
         animator.SetTrigger("Attack");
         Debug.Log("Finished waiting after attack animation.");
     }
+
+    public void TriggerDeath()
+    {
+        animator.SetTrigger("Death");
+    }
 }

@@ -604,6 +604,7 @@ MonoBehaviour:
   armorClassText: {fileID: 711515372852242300}
   attackTimer: 0
   idleTimer: 0
+  deathTimer: 2
   player: {fileID: 0}
   spawner: {fileID: 0}
   isParryable: 0
