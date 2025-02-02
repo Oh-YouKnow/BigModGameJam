@@ -30,7 +30,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<Player>();
         armorClassText.text = armorClass.ToString();
-        spawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
+        spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>();
     }
 
     // Update is called once per frame
@@ -66,7 +66,8 @@ public abstract class EnemyBase : MonoBehaviour
         Debug.Log($"{gameObject.name} has been destroyed!");
         Destroy(gameObject); // Fallback if no animation exists
 
-        // Find the Enemy Spawner and communicate taht an enemy has died.
+        // Find the Enemy Spawner and communicate that an enemy has died.
+        spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>();
         spawner.currentEnemyCount--;
     }
 
