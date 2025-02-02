@@ -92,6 +92,12 @@ public class Player : MonoBehaviour
 
 
         transform.position += input * Time.deltaTime * speed;
+        //in player.cs update: near the top
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, -49.5f, 49.5f),
+            transform.position.y,
+            Mathf.Clamp(transform.position.z, -49.5f, 49.5f)
+        );
         if (input.magnitude > 0)
         {
             playerAnimation?.SetRunning(true);
