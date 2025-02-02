@@ -17,6 +17,10 @@ public class DialogueController : MonoBehaviour
 
     [SerializeField] AudioClip gasp;
 
+    [SerializeField] GameObject backgroundImage;
+    [SerializeField] Sprite image1;
+    [SerializeField] Sprite image2;
+
     private GameObject currentDialogue;
 
     private int dialogueState = 0;
@@ -44,6 +48,7 @@ public class DialogueController : MonoBehaviour
         if (Input.GetButtonDown("Attack") || dialogueState == 0){
             switch (dialogueState) {
                 case 0:
+                    backgroundImage.GetComponent<SpriteRenderer>().sprite = image1;
                     switch (dialoguePath) {
                         case 1:
                             createDialogue("I wanna kill and eat homeless people", "Kanye", kanyeSprite1, kanyeSprite2);
@@ -77,6 +82,7 @@ public class DialogueController : MonoBehaviour
                     
                     break;
                 case 2:
+                    backgroundImage.GetComponent<SpriteRenderer>().sprite = image2;
                     switch (dialoguePath) {
                         case 1:
                             createDialogue("Wazzah! Ninjas??? In Paris????", "Kanye", kanyeSprite1, kanyeSprite2);
