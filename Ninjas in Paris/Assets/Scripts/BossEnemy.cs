@@ -4,9 +4,9 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class BasicEnemy : EnemyBase
+public class BossEnemy : EnemyBase
 {
-    enum State {Idle, Attack, Dead}
+    enum State {Idle, Attack}
     private State _state = State.Idle;
     private BasicEnemyAnim _animation;
 
@@ -30,7 +30,7 @@ public class BasicEnemy : EnemyBase
             armorClassText.transform.rotation = Camera.main.transform.rotation; // Always face the camera
         }
         // If not attacking, follow player.
-        if (_state == State.Idle && player != null && currentHealth > 0)
+        if (_state == State.Idle && player != null)
         {
             FollowPlayer();
         }
@@ -51,12 +51,6 @@ public class BasicEnemy : EnemyBase
             _animation.SetRunning(false);
             isCountered = false;
             _state = State.Idle;
-        }
-
-        if (currentHealth <= 0)
-        {
-            Debug.Log("Enemy Dead");
-            _animation.TriggerDeath();
         }
 
         switch (_state) {
@@ -100,7 +94,7 @@ public class BasicEnemy : EnemyBase
         // Move towards the player
         _animation.SetRunning(true);
         Vector3 direction = (player.transform.position - transform.position).normalized;
-        float spriteScaleX = (player.transform.position - transform.position).x > 0 ? 1 : -1;
+        float spriteScaleX = (player.transform.position - transform.position).x > 0 ? 2 : -2;
         transform.localScale = new Vector3(spriteScaleX, transform.localScale.y, transform.localScale.z);
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
