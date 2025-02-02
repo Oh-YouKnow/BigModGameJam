@@ -362,7 +362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Aaron - Character controller, music
+  m_text: Aaron - Character controller, music, sfx, enemy mechanics
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: af6580cd5ab35354ea2ae9df64d2bf87, type: 2}
   m_sharedMaterial: {fileID: 822139522842933968, guid: af6580cd5ab35354ea2ae9df64d2bf87,
@@ -644,7 +644,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Caleb - Kanye sprites, UI
+  m_text: ScaredCrow - Kanye sprites, UI, sfx, menus
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: af6580cd5ab35354ea2ae9df64d2bf87, type: 2}
   m_sharedMaterial: {fileID: 822139522842933968, guid: af6580cd5ab35354ea2ae9df64d2bf87,
@@ -1421,7 +1421,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Jack - Combat mechanics, '
+  m_text: Jack - Combat mechanics, intro cutscene
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: af6580cd5ab35354ea2ae9df64d2bf87, type: 2}
   m_sharedMaterial: {fileID: 822139522842933968, guid: af6580cd5ab35354ea2ae9df64d2bf87,
@@ -1558,7 +1558,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Chance - Enemy mechanics '
+  m_text: Chance - Enemy mechanics, combat mechanics
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: af6580cd5ab35354ea2ae9df64d2bf87, type: 2}
   m_sharedMaterial: {fileID: 822139522842933968, guid: af6580cd5ab35354ea2ae9df64d2bf87,
