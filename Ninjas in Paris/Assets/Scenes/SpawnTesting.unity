@@ -668,6 +668,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c022887dd6e4746469cd050b20985f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageSprite: {fileID: 0}
+  damageSpriteDuration: 0.5
+  parryWindowDuration: 0.5
   speed: 11
   counterSpeed: 0.1
   counterDistance: 8
@@ -692,16 +695,18 @@ MonoBehaviour:
     type: 3}
   hitboxLifetime: 0.5
   hitboxScaleFactor: 1
-  combo: 0
-  comboText: {fileID: 1916566690}
   damageSound: {fileID: 8300000, guid: 1d0e9c4b96369504a88d1dde10b15e36, type: 3}
   attackSound: {fileID: 8300000, guid: 2a56cf09fc7605a498f79c1826908fa5, type: 3}
   counterSound:
-  - {fileID: 8300000, guid: dfc709c23e79dd64da85162c50cbc8da, type: 3}
   - {fileID: 8300000, guid: eeb13c07c1d00fc41b4dcee9da1d75c3, type: 3}
+  - {fileID: 8300000, guid: dfc709c23e79dd64da85162c50cbc8da, type: 3}
   - {fileID: 8300000, guid: 5386d0629ff82ef4bb122d421b32e4e5, type: 3}
+  combo: 0
+  comboText: {fileID: 1916566690}
   hitPrefab: {fileID: 52157759}
   hitDuration: 1
+  hitboxScalePerCombo: 1
+  damageAnimatorController: {fileID: 0}
 --- !u!65 &450269935
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -990,7 +995,6 @@ RectTransform:
   - {fileID: 377593231}
   - {fileID: 2127797835}
   - {fileID: 1347040752}
-  - {fileID: 25992624}
   m_Father: {fileID: 720986922}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6881,8 +6885,7 @@ PrefabInstance:
 --- !u!1 &1980865040
 GameObject:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 7985414568129345724, guid: bed4b9f411d6f9046b01a28aa24be84b,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
@@ -7174,7 +7177,5 @@ SceneRoots:
   - {fileID: 1060538939}
   - {fileID: 1670798319}
   - {fileID: 1351442105}
-  - {fileID: 7774836074054404341}
   - {fileID: 1969290761}
   - {fileID: 720986922}
-  - {fileID: 1305104271}

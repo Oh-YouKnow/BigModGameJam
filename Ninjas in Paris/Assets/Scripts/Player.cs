@@ -39,6 +39,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float hitboxLifetime = 0.5f; // Learn to read, dumbass
     [SerializeField] private float hitboxScaleFactor = 1f; // Refer to above comment.
 
+    [SerializeField] AudioClip damageSound;
+    [SerializeField] AudioClip attackSound;
+    [SerializeField] AudioClip[] counterSound;
+
     public int combo = 0;
     [SerializeField] private GameObject comboText;
 
@@ -54,6 +58,8 @@ public class Player : MonoBehaviour
     private Vector3 oPlayerPosition;
     private Vector3 targetPosition;
 
+    private AudioSource source;
+
 
 
     void Start()
@@ -68,6 +74,8 @@ public class Player : MonoBehaviour
             damageAnimator = gameObject.AddComponent<Animator>();
             damageAnimator.runtimeAnimatorController = damageAnimatorController;
         }
+
+        source = GetComponent<AudioSource>();
     }
 
 
@@ -178,6 +186,8 @@ public class Player : MonoBehaviour
 
     public void Block()
     {
+        source.clip = counterSound[UnityEngine.Random.Range(0, counterSound.Length)]; ;
+        source.Play();
         if (hitPrefab != null)
         {
             float spriteDirection = Mathf.Sign(sprite.localScale.x); // Determine sprite direction
@@ -216,6 +226,9 @@ public class Player : MonoBehaviour
     private void PerformSlash()
     {
         if (combo <= 0) return;
+
+        source.clip = attackSound;
+        source.Play();
         playerAnimation?.TriggerAttack();
 
         float facingDirection = sprite.localScale.x > 0 ? 1 : -1;
@@ -294,6 +307,10 @@ public class Player : MonoBehaviour
 
     public void takeDamage()
     {
+
+        source.clip = damageSound;
+        source.Play();
+
         if (isParrying)
         {
             Debug.Log("[takeDamage] Attack was parried! No damage taken.");
