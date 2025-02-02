@@ -62,7 +62,7 @@ public class DialogueController : MonoBehaviour
                 case 1:
                     switch (dialoguePath) {
                         case 1:
-                            createDialogue("Erm, based alert", "Jones", jonesSprite1, jonesSprite2);
+                            createDialogue("Erm, based based police? I'd like to issue a report", "Jones", jonesSprite1, jonesSprite2);
                             break;
                         case 2:
                             createDialogue("OMG go off bestie", "Jones", jonesSprite1, jonesSprite2);
