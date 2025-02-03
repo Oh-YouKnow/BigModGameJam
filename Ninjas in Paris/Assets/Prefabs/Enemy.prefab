@@ -609,9 +609,9 @@ MonoBehaviour:
   spawner: {fileID: 0}
   isParryable: 0
   isCountered: 0
-  lungeForce: 5
-  lungeFriction: 3
   isDead: 0
+  minArmor: 1
+  maxArmor: 10
 --- !u!95 &4987031416231419558
 Animator:
   serializedVersion: 7

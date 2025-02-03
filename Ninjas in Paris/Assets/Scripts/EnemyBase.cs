@@ -24,17 +24,22 @@ public abstract class EnemyBase : MonoBehaviour
     public bool isParryable;
     public bool isCountered;
     public bool isDead;
+    public GameObject textTarget;
 
     // Start is called before the first frame update
     public void Start()
     {
+        textTarget = GameObject.Find("Main Camera");
         player = GameObject.Find("Player").GetComponent<Player>();
         armorClassText.text = armorClass.ToString();
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<EnemySpawner>();
     }
 
     // Update is called once per frame
-    
+    public void Update()
+    {
+        armorClassText.transform.LookAt(textTarget.transform.position);
+    }
     public void TakeDamage(int damage)
     {
         Debug.Log("TakeDamage Called");

@@ -495,12 +495,17 @@ MonoBehaviour:
   armorClassText: {fileID: 1159729926577820462}
   attackTimer: 0
   idleTimer: 0
+  deathTimer: 0
   player: {fileID: 0}
   spawner: {fileID: 0}
   isParryable: 0
   isCountered: 0
+  isDead: 0
+  textTarget: {fileID: 0}
   lungeForce: 5
   lungeFriction: 3
+  minArmor: 15
+  maxArmor: 20
 --- !u!95 &3505299261354609654
 Animator:
   serializedVersion: 7
