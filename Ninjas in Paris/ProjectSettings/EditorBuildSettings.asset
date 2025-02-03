@@ -20,6 +20,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Win.unity
     guid: 50eb3b5aba4fa444c95be9ceaee3e536
+  - enabled: 1
+    path: Assets/Scenes/FinalSceneSpawns.unity
+    guid: 6a3e7b0e146a5b347a929b327af1a954
+  - enabled: 1
+    path: Assets/Scenes/FinalSceneSpawnsNone.unity
+    guid: 10030b079b46b57488a30fafeadeddeb
+  - enabled: 1
+    path: Assets/Scenes/FinalSceneSpawnsMedium.unity
+    guid: 9c0539c4210e7d749a2ead7dfef48f13
+  - enabled: 1
+    path: Assets/Scenes/FinalSceneSpawnsLow.unity
+    guid: 87b0d9e8156e4b446a4f7df0c6a56e0c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 8cd0bd97a7dfd67449bf7b5439cffbe6,
       type: 2}
