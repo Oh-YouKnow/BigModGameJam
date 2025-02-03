@@ -14,11 +14,15 @@ public class BossEnemy : EnemyBase
     [SerializeField] private float lungeFriction = 3f;
     private Vector3 lungeDirection;
     private float lungeSpeed;
+
+    public int minArmor;
+    public int maxArmor;
     // Start is called before the first frame update
     new void Start()
     {
-        base.Start();
+        armorClass = Random.Range(minArmor, maxArmor);
         _animation = GetComponentInChildren<BasicEnemyAnim>();
+        base.Start();
     }
 
     // Update is called once per frame

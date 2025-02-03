@@ -9,11 +9,18 @@ public class BasicEnemy : EnemyBase
     enum State {Idle, Attack}
     private State _state = State.Idle;
     private BasicEnemyAnim _animation;
+    public int minArmor;
+    public int maxArmor;
+    private float _lastDirection = 1;
+
+    
     // Start is called before the first frame update
     new void Start()
     {
-        base.Start();
+        
         _animation = GetComponentInChildren<BasicEnemyAnim>();
+        armorClass = Random.Range(minArmor, maxArmor);
+        base.Start();
     }
 
     // Update is called once per frame
@@ -90,6 +97,9 @@ public class BasicEnemy : EnemyBase
         Vector3 direction = (player.transform.position - transform.position).normalized;
         float spriteScaleX = (player.transform.position - transform.position).x > 0 ? 1 : -1;
         transform.localScale = new Vector3(spriteScaleX, transform.localScale.y, transform.localScale.z);
+        armorClassText.transform.localScale = new Vector3(spriteScaleX, 1, 1);
+        _lastDirection = spriteScaleX;
+        
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 }
