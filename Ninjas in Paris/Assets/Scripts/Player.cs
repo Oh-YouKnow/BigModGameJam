@@ -39,6 +39,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float hitboxLifetime = 0.5f; // Learn to read, dumbass
     [SerializeField] private float hitboxScaleFactor = 1f; // Refer to above comment.
 
+    [SerializeField] AudioClip damageSound;
+    [SerializeField] AudioClip attackSound;
+    [SerializeField] AudioClip[] counterSound;
+
+    [SerializeField] GameObject kanyeFace;
+    [SerializeField] GameObject kanyeYell;
+    private float damageTimer = 0f;
+
     public int combo = 0;
     [SerializeField] private GameObject comboText;
 
@@ -54,18 +62,9 @@ public class Player : MonoBehaviour
     private Vector3 oPlayerPosition;
     private Vector3 targetPosition;
 
-    void TriggerCameraShake()
-    {
-        SmoothShakeFree.SmoothShake shake = GetComponentInChildren<SmoothShakeFree.SmoothShake>();
-        if (shake != null)
-        {
-            shake.StartShake();
-        }
-        else
-        {
-            Debug.LogWarning("No SmoothShake component found on child objects!");
-        }
-    }
+    private AudioSource source;
+
+    private float counterCooldown = 0f;
 
 
 
@@ -81,6 +80,8 @@ public class Player : MonoBehaviour
             damageAnimator = gameObject.AddComponent<Animator>();
             damageAnimator.runtimeAnimatorController = damageAnimatorController;
         }
+
+        source = GetComponent<AudioSource>();
     }
 
 
@@ -99,7 +100,10 @@ public class Player : MonoBehaviour
             
         }
 
+        kanyeFace.SetActive(damageTimer <= 0);
+        kanyeYell.SetActive(damageTimer > 0);
 
+        damageTimer -= Time.deltaTime;
 
         input = Vector3.Normalize(input);
 
@@ -111,7 +115,6 @@ public class Player : MonoBehaviour
             transform.position.y,
             Mathf.Clamp(transform.position.z, -49.5f, 49.5f)
         );
-        //end of new code
         if (input.magnitude > 0)
         {
             playerAnimation?.SetRunning(true);
@@ -133,8 +136,9 @@ public class Player : MonoBehaviour
             transform.position = targetPosition + (oPlayerPosition - targetPosition) * (moveTimer / counterSpeed);
         }
 
-        if (Input.GetButtonDown("Counter") && moveTimer <= 0) {
-            
+        counterCooldown -= Time.deltaTime;
+        if (Input.GetButtonDown("Counter") && moveTimer <= 0 && counterCooldown <= 0) {
+            counterCooldown = .2f;
             GameObject[] enemyList = GameObject.FindGameObjectsWithTag("enemy");
             Array.Sort(enemyList, DistanceComparison); //sort by distance to player
             foreach (GameObject Enemy in enemyList) {
@@ -198,6 +202,8 @@ public class Player : MonoBehaviour
 
     public void Block()
     {
+        source.clip = counterSound[UnityEngine.Random.Range(0, counterSound.Length)]; ;
+        source.Play();
         if (hitPrefab != null)
         {
             float spriteDirection = Mathf.Sign(sprite.localScale.x); // Determine sprite direction
@@ -236,6 +242,9 @@ public class Player : MonoBehaviour
     private void PerformSlash()
     {
         if (combo <= 0) return;
+
+        source.clip = attackSound;
+        source.Play();
         playerAnimation?.TriggerAttack();
 
         float facingDirection = sprite.localScale.x > 0 ? 1 : -1;
@@ -314,12 +323,18 @@ public class Player : MonoBehaviour
 
     public void takeDamage()
     {
+
+        source.clip = damageSound;
+        source.Play();
+
+        damageTimer = 1f;
+
         if (isParrying)
         {
             Debug.Log("[takeDamage] Attack was parried! No damage taken.");
             return;
         }
-        TriggerCameraShake();
+
         health--;
         combo = 0;
         comboText.GetComponent<ComboText>().killCombo();
