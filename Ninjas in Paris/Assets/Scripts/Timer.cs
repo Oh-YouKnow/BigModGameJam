@@ -43,6 +43,8 @@ public class Timer : MonoBehaviour
             }
             ChangeSpawner();
         }
+
+        if (_currentTime > timeLimit) UnityEngine.SceneManagement.SceneManager.LoadScene("Win");
     }
 
     private void ChangeSpawner()
