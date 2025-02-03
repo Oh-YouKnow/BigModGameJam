@@ -503,6 +503,8 @@ MonoBehaviour:
   isDead: 0
   lungeForce: 5
   lungeFriction: 3
+  minArmor: 15
+  maxArmor: 20
 --- !u!95 &3505299261354609654
 Animator:
   serializedVersion: 7
