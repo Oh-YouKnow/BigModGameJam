@@ -610,6 +610,8 @@ MonoBehaviour:
   isParryable: 0
   isCountered: 0
   isDead: 0
+  minArmor: 1
+  maxArmor: 10
 --- !u!95 &4987031416231419558
 Animator:
   serializedVersion: 7
