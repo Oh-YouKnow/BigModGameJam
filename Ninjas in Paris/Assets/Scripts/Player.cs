@@ -343,7 +343,7 @@ public class Player : MonoBehaviour
         source.clip = damageSound;
         source.Play();
 
-        damageTimer = 1f;
+        damageTimer = .5f;
 
         if (isParrying)
         {

@@ -413,7 +413,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1346761703}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &709860211
+--- !u!114 &709860207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -436,7 +436,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    holdDuration: 0.2
+    holdDuration: 0.15
     fadeOutDuration: 0.01
     fadeOutCurve:
       serializedVersion: 2
@@ -829,6 +829,11 @@ PrefabInstance:
       propertyPath: kanyeYell
       value: 
       objectReference: {fileID: 1262515111}
+    - target: {fileID: 8370158882169957566, guid: a66ba947bfdc0654fb4fd28bf8f92f08,
+        type: 3}
+      propertyPath: hitboxScalePerCombo
+      value: 0.18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -836,7 +841,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9120891803966381685, guid: a66ba947bfdc0654fb4fd28bf8f92f08,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 709860211}
+      addedObject: {fileID: 709860207}
   m_SourcePrefab: {fileID: 100100000, guid: a66ba947bfdc0654fb4fd28bf8f92f08, type: 3}
 --- !u!1001 &1369235996
 PrefabInstance:
