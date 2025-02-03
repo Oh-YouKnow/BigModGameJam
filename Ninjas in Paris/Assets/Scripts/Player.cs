@@ -345,6 +345,10 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(EnableDamageSprite());
         }
+
+        if(health <= 0) {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Lose");
+        }
     }
     private IEnumerator EnableDamageSprite()
     {

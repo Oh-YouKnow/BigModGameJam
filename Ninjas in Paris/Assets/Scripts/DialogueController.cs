@@ -115,6 +115,6 @@ public class DialogueController : MonoBehaviour
             obj.SetActive(true);
         }
         this.gameObject.SetActive(false);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("SpawnTesting");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("FinalSceneSpawns");
     }
 }
