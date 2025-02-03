@@ -54,7 +54,7 @@ MonoBehaviour:
         type: 3}
       weight: 1
   maxEnemies: 10
-  secondsBetweenSpawns: 2
+  secondsBetweenSpawns: 1.5
   currentEnemyCount: 0
   waveSpawnEnemy: {fileID: 2715926350870019285, guid: 05ab2d4a44260dc4399db4affd57bd60,
     type: 3}

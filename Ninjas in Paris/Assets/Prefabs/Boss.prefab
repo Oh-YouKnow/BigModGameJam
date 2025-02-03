@@ -486,7 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5885890b05ca0468a71986b967861a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
+  moveSpeed: 3
   attackDistance: 5
   damageArea: {fileID: 7875443537531460109}
   currentHealth: 1
@@ -495,10 +495,12 @@ MonoBehaviour:
   armorClassText: {fileID: 1159729926577820462}
   attackTimer: 0
   idleTimer: 0
+  deathTimer: 0
   player: {fileID: 0}
   spawner: {fileID: 0}
   isParryable: 0
   isCountered: 0
+  isDead: 0
   lungeForce: 5
   lungeFriction: 3
 --- !u!95 &3505299261354609654

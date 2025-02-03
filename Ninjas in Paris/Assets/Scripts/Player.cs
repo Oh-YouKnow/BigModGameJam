@@ -217,6 +217,7 @@ public class Player : MonoBehaviour
 
     public void Block()
     {
+        counterCooldown = .05f;
         source.clip = counterSound[UnityEngine.Random.Range(0, counterSound.Length)]; ;
         source.Play();
         if (hitPrefab != null)

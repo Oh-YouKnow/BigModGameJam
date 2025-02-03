@@ -595,7 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240e21cd01e859542a6af2012244505b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 4
   attackDistance: 5
   damageArea: {fileID: 7927572070538775545}
   currentHealth: 1
@@ -609,8 +609,6 @@ MonoBehaviour:
   spawner: {fileID: 0}
   isParryable: 0
   isCountered: 0
-  lungeForce: 5
-  lungeFriction: 3
   isDead: 0
 --- !u!95 &4987031416231419558
 Animator:
