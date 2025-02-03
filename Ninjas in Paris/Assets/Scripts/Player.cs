@@ -68,15 +68,7 @@ public class Player : MonoBehaviour
 
     void TriggerCameraShake()
     {
-        SmoothShakeFree.SmoothShake shake = GetComponentInChildren<SmoothShakeFree.SmoothShake>();
-        if (shake != null)
-        {
-            shake.StartShake();
-        }
-        else
-        {
-            Debug.LogWarning("No SmoothShake component found on child objects!");
-        }
+
     }
 
     void Start()
