@@ -99,7 +99,7 @@ public class BasicEnemy : EnemyBase
         transform.localScale = new Vector3(spriteScaleX, transform.localScale.y, transform.localScale.z);
         armorClassText.transform.localScale = new Vector3(spriteScaleX, 1, 1);
         _lastDirection = spriteScaleX;
-        
+        // dummy code
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 }
