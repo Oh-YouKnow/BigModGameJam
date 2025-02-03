@@ -90,6 +90,9 @@ public class BasicEnemy : EnemyBase
         Vector3 direction = (player.transform.position - transform.position).normalized;
         float spriteScaleX = (player.transform.position - transform.position).x > 0 ? 1 : -1;
         transform.localScale = new Vector3(spriteScaleX, transform.localScale.y, transform.localScale.z);
+        armorClassText.transform.localScale = new Vector3(spriteScaleX, 1, 1);
+        _lastDirection = spriteScaleX;
+        // dummy code
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 }
