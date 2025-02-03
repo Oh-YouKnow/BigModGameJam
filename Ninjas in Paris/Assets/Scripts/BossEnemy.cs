@@ -100,6 +100,7 @@ public class BossEnemy : EnemyBase
         Vector3 direction = (player.transform.position - transform.position).normalized;
         float spriteScaleX = (player.transform.position - transform.position).x > 0 ? 2 : -2;
         transform.localScale = new Vector3(spriteScaleX, transform.localScale.y, transform.localScale.z);
+        armorClassText.transform.localScale = new Vector3(spriteScaleX, 1, 1);
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
     private bool isDead = false;
