@@ -70,7 +70,7 @@ public class BasicEnemy : EnemyBase
                 if (attackTimer <= 0) {
                     _animation.TriggerAttack();
                     isParryable = false;
-                    player.GetComponent<Player>().takeDamage();
+                    if (Vector3.Distance(transform.position, player.transform.position) < attackDistance) player.GetComponent<Player>().takeDamage();
                     idleTimer = 2;
                     _state = State.Idle;
                 }

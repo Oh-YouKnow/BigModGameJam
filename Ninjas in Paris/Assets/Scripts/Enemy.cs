@@ -63,8 +63,8 @@ public class Enemy : MonoBehaviour {
                 attackMarker.transform.localScale = new Vector3(1, 1, 1) * ((attackTimer / 3f) + .1f);
                 attackTimer -= Time.deltaTime;
 
-                if (attackTimer <= 0 && Vector3.Distance(transform.position, player.transform.position) < attackDistance) {
-                    player.GetComponent<Player>().takeDamage();
+                if (attackTimer <= 0) {
+                    if (Vector3.Distance(transform.position, player.transform.position) < attackDistance) player.GetComponent<Player>().takeDamage();
                     state = states.idle;
                 }
                 break;
