@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
 
     [SerializeField] private float parryWindowDuration = 0.5f; // Time where all attacks are negated
-    
+
     [SerializeField] float speed;
     [SerializeField] float counterSpeed;
     [SerializeField] float counterDistance;
@@ -66,12 +66,23 @@ public class Player : MonoBehaviour
 
     private float counterCooldown = 0f;
 
-
+    void TriggerCameraShake()
+    {
+        SmoothShakeFree.SmoothShake shake = GetComponentInChildren<SmoothShakeFree.SmoothShake>();
+        if (shake != null)
+        {
+            shake.StartShake();
+        }
+        else
+        {
+            Debug.LogWarning("No SmoothShake component found on child objects!");
+        }
+    }
 
     void Start()
     {
         playerAnimation = GetComponentInChildren<PlayerAnimation>();
-        
+
         cylinderHitbox.SetActive(false); // Hide initially
 
         healthUI = GameObject.Find("HeartUI");
@@ -97,7 +108,7 @@ public class Player : MonoBehaviour
         if (isSliding)
         {
             HandleSliding();
-            
+
         }
 
         kanyeFace.SetActive(damageTimer <= 0);
@@ -132,22 +143,26 @@ public class Player : MonoBehaviour
             sprite.localScale = new Vector3(spriteScaleX, sprite.localScale.y, sprite.localScale.z);
         }
         moveTimer -= Time.deltaTime;
-        if(moveTimer > 0) {
+        if (moveTimer > 0)
+        {
             transform.position = targetPosition + (oPlayerPosition - targetPosition) * (moveTimer / counterSpeed);
         }
 
         counterCooldown -= Time.deltaTime;
-        if (Input.GetButtonDown("Counter") && moveTimer <= 0 && counterCooldown <= 0) {
+        if (Input.GetButtonDown("Counter") && moveTimer <= 0 && counterCooldown <= 0)
+        {
             counterCooldown = .2f;
             GameObject[] enemyList = GameObject.FindGameObjectsWithTag("enemy");
             Array.Sort(enemyList, DistanceComparison); //sort by distance to player
-            foreach (GameObject Enemy in enemyList) {
+            foreach (GameObject Enemy in enemyList)
+            {
                 Vector3 enemyPos = Enemy.transform.position;
                 Vector3 playerPos = transform.position;
 
                 if (Vector3.Distance(enemyPos, playerPos) > counterDistance) break;
-                
-                if (Enemy.GetComponent<EnemyBase>().isParryable) {
+
+                if (Enemy.GetComponent<EnemyBase>().isParryable)
+                {
                     Debug.Log("Counter registered.");
                     Enemy.GetComponent<EnemyBase>().Counter();
 
@@ -187,10 +202,10 @@ public class Player : MonoBehaviour
                     break;
                 }
             }
-            
+
 
         }
-        
+
         if (Input.GetButtonDown("Attack"))
         {
             PerformSlash();
@@ -237,7 +252,7 @@ public class Player : MonoBehaviour
 
 
     [SerializeField] private float hitboxScalePerCombo = 1f;
-    
+
 
     private void PerformSlash()
     {
@@ -312,7 +327,8 @@ public class Player : MonoBehaviour
     }
 
 
-    private void increaseCombo() {
+    private void increaseCombo()
+    {
         combo++;
         comboText.GetComponent<ComboText>().increaseCombo(combo);
     }
@@ -340,13 +356,14 @@ public class Player : MonoBehaviour
         comboText.GetComponent<ComboText>().killCombo();
         healthUI.GetComponent<HealthUI>().takeDamage(health);
 
-        
+
         if (damageSprite != null)
         {
             StartCoroutine(EnableDamageSprite());
         }
 
-        if(health <= 0) {
+        if (health <= 0)
+        {
             UnityEngine.SceneManagement.SceneManager.LoadScene("Lose");
         }
     }
@@ -462,7 +479,8 @@ public class Player : MonoBehaviour
 
 
 
-    private int DistanceComparison(GameObject a, GameObject b) {
+    private int DistanceComparison(GameObject a, GameObject b)
+    {
         //null check, I consider nulls to be less than non-null
         if (a == null) return (b == null) ? 0 : -1;
         if (b == null) return 1;
