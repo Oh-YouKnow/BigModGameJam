@@ -251,7 +251,7 @@ public class Player : MonoBehaviour
 
 
 
-    [SerializeField] private float hitboxScalePerCombo = 1f;
+    [SerializeField] private float hitboxScalePerCombo;
 
 
     private void PerformSlash()
@@ -268,7 +268,8 @@ public class Player : MonoBehaviour
         Vector3 baseScale = cylinderHitboxPrefab.transform.localScale;
 
         // Increase size based on combo count
-        float scaleMultiplier = 1 + (hitboxScalePerCombo * combo);
+        //float scaleMultiplier = 1 + (hitboxScalePerCombo * combo);
+        float scaleMultiplier = 1 + CalculateComboScale(combo) / 10f;
         Vector3 newHitboxScale = baseScale * scaleMultiplier;
 
         // Keep the hitbox in front of the player, adjusting for new size

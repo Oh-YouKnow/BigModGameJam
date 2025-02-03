@@ -602,12 +602,17 @@ PrefabInstance:
     - target: {fileID: 8370158882169957566, guid: a66ba947bfdc0654fb4fd28bf8f92f08,
         type: 3}
       propertyPath: smokeScaleFactor
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8370158882169957566, guid: a66ba947bfdc0654fb4fd28bf8f92f08,
         type: 3}
       propertyPath: hitboxScaleFactor
-      value: 0.1
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8370158882169957566, guid: a66ba947bfdc0654fb4fd28bf8f92f08,
+        type: 3}
+      propertyPath: hitboxScalePerCombo
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
