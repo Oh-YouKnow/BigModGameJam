@@ -211,6 +211,26 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1110007904}
+    - target: {fileID: 3746594668043301177, guid: aa23f52481df3de409228db30874921b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746594668043301177, guid: aa23f52481df3de409228db30874921b,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746594668043301177, guid: aa23f52481df3de409228db30874921b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746594668043301177, guid: aa23f52481df3de409228db30874921b,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6320035813067453312, guid: aa23f52481df3de409228db30874921b,
         type: 3}
       propertyPath: m_Name
